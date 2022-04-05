@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Beans</h1>
+
+<div id="beans">
+  <% @beans.each do |bean| %>
+    <%= render bean %>
+    <p>
+      <%= link_to "Show this bean", bean %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New bean", new_bean_path %>
