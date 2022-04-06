@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Coffee types</h1>
+
+<div id="coffee_types">
+  <% @coffee_types.each do |coffee_type| %>
+    <%= render coffee_type %>
+    <p>
+      <%= link_to "Show this coffee type", coffee_type %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New coffee type", new_coffee_type_path %>
