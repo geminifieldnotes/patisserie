@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :coffees
   get 'coffee_types/index'
   get 'coffee_types/show'
   resources :coffee_types

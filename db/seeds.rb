@@ -14,35 +14,42 @@ require 'uri'
 require 'net/http'
 require 'openssl'
 
+
 Bean.delete_all
-# Taxonomy API
-bean_url = URI('https://starducks-mongodb-server.herokuapp.com/coffee')
+CoffeeType.delete_all
 
-bean_http = Net::HTTP.new(bean_url.host, bean_url.port)
-bean_http.use_ssl = true
-bean_http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+# Coffee Type API
+coffee_type_url = URI('https://starducks-mongodb-server.herokuapp.com/coffee')
 
-bean_request = Net::HTTP::Get.new(bean_url)
-# tax_request['x-rapidapi-host'] = 'animaliapi3.p.rapidapi.com'
-# tax_request['x-rapidapi-key'] = '4e918625e2msh97a4cf18c9c9154p1df0bdjsn8d5112e81787'
+coffee_type_http = Net::HTTP.new(coffee_type_url.host, coffee_type_url.port)
+coffee_type_http.use_ssl = true
+coffee_type_http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-bean_response = bean_http.request(bean_request)
-# tax_response_data = tax_response.read_body
-third_party_beans = JSON.parse(bean_response.read_body)
-
-# CoffeeBean.delete_all
+coffee_type_request = Net::HTTP::Get.new(coffee_type_url)
+coffee_type_response = coffee_type_http.request(coffee_type_request)
+third_party_types = JSON.parse(coffee_type_response.read_body)
 
 # 55.times do
-third_party_beans.each do |x|
-  Bean.create(
+third_party_types.each do |x|
+  CoffeeType.create(
     name: x['title'],
     description: x['description']
   )
 end
-# CoffeeBean.create(
-#   name: taxonomy['title'],
-#   description: taxonomy['description']
+
+# CoffeeType.create(
+#   name: 'Turkish Coffee',
+#   description: 'A rich, thick, and delightful drink to be enjoyed slowly with good company. It is brewed in a copper coffee pot called a cezve (jez-VEY), made with powder-like ground coffee, and sweetened to the drinker\'s taste.'
 # )
-# end
+
+# CoffeeType.create(
+#   name: 'Vietnamese Coffee',
+#   description: 'Traditionally brewed in a phin – a small metal cup that fits over a mug or cup– and brews incredibly slowly, but makes a strong and small coffee which resembles a thicker, more caffeinated espresso.'
+# )
+# CoffeeBean.create(
+#   name: 'Bulletproof Coffee',
+#   description:'A high fat, low carb standard brewed coffee with coconut oil and unsalted butter
+# )
+
 
 puts Bean.count
