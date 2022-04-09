@@ -13,12 +13,27 @@
 require 'uri'
 require 'net/http'
 require 'openssl'
+require 'csv'
 
 
 Bean.delete_all
 CoffeeType.delete_all
+Coffee.delete_all
 
-# Coffee Type API
+# Webscraped Primary Coffee Beans
+beans = []
+CSV.new(open('./db/coffeeBeanTypes.csv'), :headers => :false).each do |row|
+  beans.push(row.to_hash)
+end
+
+beans.each do |bean|
+  Bean.create(
+    name: bean[bean.keys[0]],
+    description: bean[bean.keys[1]]
+  )
+end
+
+# Coffee Types API
 coffee_type_url = URI('https://starducks-mongodb-server.herokuapp.com/coffee')
 
 coffee_type_http = Net::HTTP.new(coffee_type_url.host, coffee_type_url.port)
@@ -29,11 +44,11 @@ coffee_type_request = Net::HTTP::Get.new(coffee_type_url)
 coffee_type_response = coffee_type_http.request(coffee_type_request)
 third_party_types = JSON.parse(coffee_type_response.read_body)
 
-# 55.times do
 third_party_types.each do |x|
-  CoffeeType.create(
+  Coffee.create(
     name: x['title'],
-    description: x['description']
+    description: x['description'],
+    price: 3.99
   )
 end
 
@@ -46,10 +61,7 @@ end
 #   name: 'Vietnamese Coffee',
 #   description: 'Traditionally brewed in a phin – a small metal cup that fits over a mug or cup– and brews incredibly slowly, but makes a strong and small coffee which resembles a thicker, more caffeinated espresso.'
 # )
-# CoffeeBean.create(
+# CoffeeType.create(
 #   name: 'Bulletproof Coffee',
 #   description:'A high fat, low carb standard brewed coffee with coconut oil and unsalted butter
 # )
-
-
-puts Bean.count
