@@ -107,3 +107,22 @@ Coffee.create(
 )
 
 # Coffee Types - Manual creation
+CoffeeType.create(
+  name: 'Black Coffee',
+  description: 'Coffee in its simplest form. The coffee beans are picked, roasted and prepared then ground. The coffee grounds are brewed in your choice of machines (or through the pour over method). Once you do this, the coffee that is left in your cup is all there is.'
+)
+
+CoffeeType.create(
+  name: 'Espresso',
+  description: 'Similar to black coffee in that the beans are picked, roasted and prepared then ground but into a much finer grind and then ‘pulled’ to create a very strong, potent, and more flavorful coffee drink rather than the slightly milder flavor of the black coffee.'
+)
+
+CoffeeType.create(
+  name: 'Milk-based Beverage',
+  description: 'Drinks which are always made with milk. Adding specific amounts or types of milk to your coffee or tea can create an entirely different flavor profile.'
+)
+
+CoffeeType.create(
+  name: 'Tea',
+  description: 'A very palatable beverage beloved for its variety of tastes. A great cup of tea is about gathering great tea leaves, crafting tea blends, and steeping with traditional tea-brewing techniques.'
+)
