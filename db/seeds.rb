@@ -33,6 +33,36 @@ beans.each do |bean|
   )
 end
 
+# Webscraped Coffee Drinks
+CSV.new(open('./db/coffees.csv'), :headers => :false).each do |row|
+  coffees_data = row.to_hash
+  names = coffees_data[coffees_data.keys[0]].tr('[]', '').split(",")
+  descriptions = coffees_data[coffees_data.keys[1]].tr('[]', '').split(" , ")
+
+  names.each_with_index do |coffee, index|
+    Coffee.create(
+      name: coffee.tr('{""}', '').split(":")[1],
+      description: descriptions[index].tr('{"}', '').split(":")[1],
+      price: 6.45
+    )
+  end
+end
+
+# Webscraped Commerical Coffee Drinks
+CSV.new(open('./db/commercial_coffees.csv'), :headers => :false).each do |row|
+  comm_coffees_data = row.to_hash
+  comm_names = comm_coffees_data[comm_coffees_data.keys[0]].tr('[]', '').split(",")
+  comm_descriptions = comm_coffees_data[comm_coffees_data.keys[1]].tr('[]', '').split(" , ")
+
+  comm_names.each_with_index do |comm_coffee, index|
+    Coffee.create(
+      name: comm_coffee.tr('{""}', '').split(":")[1],
+      description: comm_descriptions[index].tr('{"}', '').split(":")[1],
+      price: 4.25
+    )
+  end
+end
+
 # Coffee Types API
 coffee_type_url = URI('https://starducks-mongodb-server.herokuapp.com/coffee')
 
@@ -52,16 +82,28 @@ third_party_types.each do |x|
   )
 end
 
-# CoffeeType.create(
-#   name: 'Turkish Coffee',
-#   description: 'A rich, thick, and delightful drink to be enjoyed slowly with good company. It is brewed in a copper coffee pot called a cezve (jez-VEY), made with powder-like ground coffee, and sweetened to the drinker\'s taste.'
-# )
+# Unique/International Coffees - Manual creation
+Coffee.create(
+  name: 'Turkish Coffee',
+  description: 'A rich, thick, and delightful drink to be enjoyed slowly with good company. It is brewed in a copper coffee pot called a cezve (jez-VEY), made with powder-like ground coffee, and sweetened to the drinker\'s taste.',
+  price: 4.50
+)
 
-# CoffeeType.create(
-#   name: 'Vietnamese Coffee',
-#   description: 'Traditionally brewed in a phin – a small metal cup that fits over a mug or cup– and brews incredibly slowly, but makes a strong and small coffee which resembles a thicker, more caffeinated espresso.'
-# )
-# CoffeeType.create(
-#   name: 'Bulletproof Coffee',
-#   description:'A high fat, low carb standard brewed coffee with coconut oil and unsalted butter
-# )
+Coffee.create(
+  name: 'Turkish Iced Coffee',
+  description: 'A refreshing, cold, rich, thick, and delightful drink to be enjoyed slowly with good company. It is brewed in a copper coffee pot called a cezve (jez-VEY), made with powder-like ground coffee, and sweetened to the drinker\'s taste.',
+  price: 4.50
+)
+
+Coffee.create(
+  name: 'Vietnamese Coffee',
+  description: 'Traditionally brewed in a phin – a small metal cup that fits over a mug or cup– and brews incredibly slowly, but makes a strong and small coffee which resembles a thicker, more caffeinated espresso.',
+  price: 4.75
+)
+Coffee.create(
+  name: 'Bulletproof Coffee',
+  description:'A high fat, low carb standard brewed coffee with coconut oil and unsalted butter',
+  price: 5.99
+)
+
+# Coffee Types - Manual creation
