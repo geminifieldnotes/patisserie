@@ -2,6 +2,7 @@ class Coffee < ApplicationRecord
   # attr_accessible :name, :description, :price, :bean_id
 
   belongs_to :bean
+  belongs_to :coffee_type
 
   validates :name, :description, :price, presence: true
   validates :name, uniqueness: true

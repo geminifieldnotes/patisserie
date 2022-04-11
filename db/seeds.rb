@@ -38,85 +38,6 @@ Bean.create(
   description: 'Some beverages we offer do not require coffee beans.'
 )
 
-# Webscraped Coffee Drinks
-CSV.new(open('./db/coffees.csv'), :headers => :false).each do |row|
-  coffees_data = row.to_hash
-  names = coffees_data[coffees_data.keys[0]].tr('[]', '').split(",")
-  descriptions = coffees_data[coffees_data.keys[1]].tr('[]', '').split(" , ")
-
-  names.each_with_index do |coffee, index|
-    Coffee.create(
-      name: coffee.tr('{""}', '').split(":")[1],
-      description: descriptions[index].tr('{"}', '').split(":")[1],
-      price: 6.45,
-      bean_id: Bean.find_by('name LIKE "Arabica%"').id
-    )
-  end
-end
-
-# Webscraped Commerical Coffee Drinks
-CSV.new(open('./db/commercial_coffees.csv'), :headers => :false).each do |row|
-  comm_coffees_data = row.to_hash
-  comm_names = comm_coffees_data[comm_coffees_data.keys[0]].tr('[]', '').split(",")
-  comm_descriptions = comm_coffees_data[comm_coffees_data.keys[1]].tr('[]', '').split(" , ")
-
-  comm_names.each_with_index do |comm_coffee, index|
-      puts comm_coffee
-      Coffee.create(
-        name: comm_coffee.tr('{""}', '').split(":")[1],
-        description: comm_descriptions[index].tr('{"}', '').split(":")[1],
-        price: 4.25,
-        bean_id: comm_coffee.include?("Tea") ? Bean.find_by('name LIKE "No%"').id : Bean.find_by('name LIKE "Robusta%"').id
-      )
-end
-
-# Coffee Types API
-coffee_type_url = URI('https://starducks-mongodb-server.herokuapp.com/coffee')
-
-coffee_type_http = Net::HTTP.new(coffee_type_url.host, coffee_type_url.port)
-coffee_type_http.use_ssl = true
-coffee_type_http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-coffee_type_request = Net::HTTP::Get.new(coffee_type_url)
-coffee_type_response = coffee_type_http.request(coffee_type_request)
-third_party_types = JSON.parse(coffee_type_response.read_body)
-
-third_party_types.each do |x|
-  Coffee.create(
-    name: x['title'],
-    description: x['description'],
-    price: 3.99,
-    bean_id: Bean.find_by('name LIKE "Liberica%"').id
-  )
-end
-
-# Unique/International Coffees - Manual creation
-Coffee.create(
-  name: 'Turkish Coffee',
-  description: 'A rich, thick, and delightful drink to be enjoyed slowly with good company. It is brewed in a copper coffee pot called a cezve (jez-VEY), made with powder-like ground coffee, and sweetened to the drinker\'s taste.',
-  price: 4.50,
-  bean_id: Bean.find_by('name LIKE "Excelsa%"').id
-)
-
-Coffee.create(
-  name: 'Turkish Iced Coffee',
-  description: 'A refreshing, cold, rich, thick, and delightful drink to be enjoyed slowly with good company. It is brewed in a copper coffee pot called a cezve (jez-VEY), made with powder-like ground coffee, and sweetened to the drinker\'s taste.',
-  price: 4.50,
-  bean_id: Bean.find_by('name LIKE "Excelsa%"').id
-)
-
-Coffee.create(
-  name: 'Vietnamese Coffee',
-  description: 'Traditionally brewed in a phin – a small metal cup that fits over a mug or cup– and brews incredibly slowly, but makes a strong and small coffee which resembles a thicker, more caffeinated espresso.',
-  price: 4.75,
-  bean_id: Bean.find_by('name LIKE "Excelsa%"').id
-)
-Coffee.create(
-  name: 'Bulletproof Coffee',
-  description:'A high fat, low carb standard brewed coffee with coconut oil and unsalted butter',
-  price: 5.99,
-  bean_id: Bean.find_by('name LIKE "Excelsa%"').id
-)
 
 # Coffee Types - Manual creation
 CoffeeType.create(
@@ -137,6 +58,104 @@ CoffeeType.create(
 CoffeeType.create(
   name: 'Tea',
   description: 'A very palatable beverage beloved for its variety of tastes. A great cup of tea is about gathering great tea leaves, crafting tea blends, and steeping with traditional tea-brewing techniques.'
+)
+
+# Webscraped Coffee Drinks
+CSV.new(open('./db/coffees.csv'), :headers => :false).each do |row|
+  coffees_data = row.to_hash
+  names = coffees_data[coffees_data.keys[0]].tr('[]', '').split(",")
+  descriptions = coffees_data[coffees_data.keys[1]].tr('[]', '').split(" , ")
+
+  names.each_with_index do |coffee, index|
+    desc = descriptions[index].tr('{"}', '').split(":")[1]
+    Coffee.create(
+      name: coffee.tr('{""}', '').split(":")[1],
+      description: desc,
+      price: 6.45,
+      bean_id: Bean.find_by('name LIKE "Arabica%"').id,
+      coffee_type_id: desc.include?("milk") ? CoffeeType.find_by(name: 'Milk-based Beverage').id : CoffeeType.find_by(name: 'Black Coffee').id
+    )
+  end
+end
+
+# Webscraped Commerical Coffee Drinks
+CSV.new(open('./db/commercial_coffees.csv'), :headers => :false).each do |row|
+  comm_coffees_data = row.to_hash
+  comm_names = comm_coffees_data[comm_coffees_data.keys[0]].tr('[]', '').split(",")
+  comm_descriptions = comm_coffees_data[comm_coffees_data.keys[1]].tr('[]', '').split(" , ")
+
+  comm_names.each_with_index do |comm_coffee, index|
+      comm_coffee_type = 0
+      comm_desc = comm_descriptions[index].tr('{"}', '').split(":")[1]
+
+      if comm_desc.include?("tea")
+        comm_coffee_type = CoffeeType.find_by(name: 'Tea').id
+      elsif comm_desc.include?("espresso")
+        comm_coffee_type =CoffeeType.find_by(name: 'Espresso').id
+      else
+        comm_coffee_type =CoffeeType.find_by(name: 'Milk-based Beverage').id
+      end
+
+      Coffee.create(
+        name: comm_coffee.tr('{""}', '').split(":")[1],
+        description: comm_desc,
+        price: 4.25,
+        bean_id: comm_coffee.include?("Tea") ? Bean.find_by('name LIKE "No%"').id : Bean.find_by('name LIKE "Robusta%"').id,
+        coffee_type_id: comm_coffee_type
+      )
+end
+
+# Coffee Types API
+coffee_type_url = URI('https://starducks-mongodb-server.herokuapp.com/coffee')
+
+coffee_type_http = Net::HTTP.new(coffee_type_url.host, coffee_type_url.port)
+coffee_type_http.use_ssl = true
+coffee_type_http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+coffee_type_request = Net::HTTP::Get.new(coffee_type_url)
+coffee_type_response = coffee_type_http.request(coffee_type_request)
+third_party_types = JSON.parse(coffee_type_response.read_body)
+
+third_party_types.each do |x|
+  Coffee.create(
+    name: x['title'],
+    description: x['description'],
+    price: 3.99,
+    bean_id: Bean.find_by('name LIKE "Liberica%"').id,
+    coffee_type_id: x['description'].include?("espresso") ? CoffeeType.find_by(name: 'Espresso').id : CoffeeType.find_by(name: 'Black Coffee').id
+  )
+end
+
+# Unique/International Coffees - Manual creation
+Coffee.create(
+  name: 'Turkish Coffee',
+  description: 'A rich, thick, and delightful drink to be enjoyed slowly with good company. It is brewed in a copper coffee pot called a cezve (jez-VEY), made with powder-like ground coffee, and sweetened to the drinker\'s taste.',
+  price: 4.50,
+  bean_id: Bean.find_by('name LIKE "Excelsa%"').id,
+  coffee_type_id: CoffeeType.find_by(name: 'Black Coffee').id
+)
+
+Coffee.create(
+  name: 'Turkish Iced Coffee',
+  description: 'A refreshing, cold, rich, thick, and delightful drink to be enjoyed slowly with good company. It is brewed in a copper coffee pot called a cezve (jez-VEY), made with powder-like ground coffee, and sweetened to the drinker\'s taste.',
+  price: 4.50,
+  bean_id: Bean.find_by('name LIKE "Excelsa%"').id,
+  coffee_type_id: CoffeeType.find_by(name: 'Black Coffee').id
+)
+
+Coffee.create(
+  name: 'Vietnamese Coffee',
+  description: 'Traditionally brewed in a phin – a small metal cup that fits over a mug or cup– and brews incredibly slowly, but makes a strong and small coffee which resembles a thicker, more caffeinated espresso.',
+  price: 4.75,
+  bean_id: Bean.find_by('name LIKE "Excelsa%"').id,
+  coffee_type_id: CoffeeType.find_by(name: 'Black Coffee').id
+)
+Coffee.create(
+  name: 'Bulletproof Coffee',
+  description:'A high fat, low carb standard brewed coffee with coconut oil and unsalted butter',
+  price: 5.99,
+  bean_id: Bean.find_by('name LIKE "Excelsa%"').id,
+  coffee_type_id: CoffeeType.find_by(name: 'Black Coffee').id
 )
 
 end

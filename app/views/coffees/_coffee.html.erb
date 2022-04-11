@@ -1,12 +1,11 @@
 <div id="<%= dom_id coffee %>">
   <p>
-    <strong>Name:</strong>
-    <%= coffee.name %>
+    <strong><%= link_to coffee.name, coffee %></strong>
   </p>
 
   <p>
-    <strong>Coffee Bean:</strong>
-    <%= coffee.bean.name %>
+    <strong>Bean and Type:</strong>
+    <%= coffee.bean.name %> | <%= coffee.coffee_type.name %>
   </p>
 
   <p>
