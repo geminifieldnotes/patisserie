@@ -5,13 +5,18 @@
   </p>
 
   <p>
+    <strong>Coffee Bean:</strong>
+    <%= coffee.bean.name %>
+  </p>
+
+  <p>
     <strong>Description:</strong>
     <%= coffee.description %>
   </p>
 
   <p>
     <strong>Price:</strong>
-    <%= coffee.price %>
+    <%= coffee.price == coffee.price ? coffee.price : 'Not Applicable' %>
   </p>
 
 </div>
