@@ -13,10 +13,14 @@ class CoffeesController < ApplicationController
   # GET /coffees/new
   def new
     @coffee = Coffee.new
+    @beans = Bean.order(:name)
+    @coffee_types = CoffeeType.order(:name)
   end
 
   # GET /coffees/1/edit
   def edit
+    @beans = Bean.order(:name)
+    @coffee_types = CoffeeType.order(:name)
   end
 
   # POST /coffees or /coffees.json
@@ -65,6 +69,6 @@ class CoffeesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def coffee_params
-      params.require(:coffee).permit(:name, :description, :price)
+      params.require(:coffee).permit(:name, :description, :price, :bean_id, :coffee_type_id)
     end
 end
