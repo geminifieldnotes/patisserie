@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_11_163611) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_12_214110) do
   create_table "beans", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -33,6 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_11_163611) do
     t.datetime "updated_at", null: false
     t.integer "bean_id"
     t.integer "coffee_type_id"
+    t.string "image"
   end
 
 end

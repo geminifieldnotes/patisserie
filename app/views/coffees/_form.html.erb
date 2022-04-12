@@ -28,12 +28,12 @@
 
   <div>
     <%= form.label :bean_id, style: "display: block" %>
-    <%= form.text_field :bean_id %>
+    <%= form.collection_select :bean_id, @beans, :id, :name %>
   </div>
 
   <div>
     <%= form.label :coffee_type_id, style: "display: block" %>
-    <%= form.text_field :coffee_type_id %>
+    <%= form.collection_select :coffee_type_id, @coffee_types, :id, :name %>
   </div>
   <div>
     <%= form.submit %>
