@@ -3,6 +3,10 @@
     <strong><%= link_to coffee.name, coffee %></strong>
   </p>
 
+  <%= image_tag coffee.image.to_s if coffee.image.present? %>
+  <%= image_tag coffee.image.thumb.to_s if coffee.image.present? %>
+
+
   <p>
     <strong>Bean and Type:</strong>
     <%= coffee.bean.name %> | <%= coffee.coffee_type.name %>

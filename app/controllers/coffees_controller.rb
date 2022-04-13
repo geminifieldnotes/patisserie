@@ -13,6 +13,7 @@ class CoffeesController < ApplicationController
   # GET /coffees/new
   def new
     @coffee = Coffee.new
+    @coffee.image = coffee_params[:file]
     @beans = Bean.order(:name)
     @coffee_types = CoffeeType.order(:name)
   end
@@ -26,6 +27,7 @@ class CoffeesController < ApplicationController
   # POST /coffees or /coffees.json
   def create
     @coffee = Coffee.new(coffee_params)
+    @coffee.image = coffee_params[:file]
 
     respond_to do |format|
       if @coffee.save
@@ -41,6 +43,8 @@ class CoffeesController < ApplicationController
   # PATCH/PUT /coffees/1 or /coffees/1.json
   def update
     respond_to do |format|
+      puts coffee_params
+      @coffee.update(coffee_params)
       if @coffee.update(coffee_params)
         format.html { redirect_to coffee_url(@coffee), notice: "Coffee was successfully updated." }
         format.json { render :show, status: :ok, location: @coffee }
@@ -69,6 +73,6 @@ class CoffeesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def coffee_params
-      params.require(:coffee).permit(:name, :description, :price, :bean_id, :coffee_type_id)
+      params.require(:coffee).permit(:name, :description, :price, :bean_id, :coffee_type_id, :image)
     end
 end

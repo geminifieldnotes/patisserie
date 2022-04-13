@@ -35,6 +35,12 @@
     <%= form.label :coffee_type_id, style: "display: block" %>
     <%= form.collection_select :coffee_type_id, @coffee_types, :id, :name %>
   </div>
+
+  <div>
+    <%= form.label :image, style: "display: block" %>
+    <%= form.file_field :image %>
+  </div>
+
   <div>
     <%= form.submit %>
   </div>
