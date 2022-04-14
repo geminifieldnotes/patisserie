@@ -11,4 +11,17 @@ class Coffee < ApplicationRecord
 
   mount_uploader :image, ImageUploader
   serialize :image, JSON
+
+  def self.search(search)
+    if search
+      coffees = Coffee.where("name LIKE '%#{search}%'")
+        if coffees
+          @coffees = coffees
+        else
+          @coffees = Coffee.all
+        end
+    else
+      @coffees = Coffee.all
+    end
+  end
 end

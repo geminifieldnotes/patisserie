@@ -4,10 +4,12 @@ class CoffeesController < ApplicationController
   # GET /coffees or /coffees.json
   def index
     @coffees = Coffee.all
+    @coffees = Coffee.search(params[:search]).order(:id).page(params[:page])
   end
 
   # GET /coffees/1 or /coffees/1.json
   def show
+    @action = "show"
   end
 
   # GET /coffees/new
@@ -73,6 +75,6 @@ class CoffeesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def coffee_params
-      params.require(:coffee).permit(:name, :description, :price, :bean_id, :coffee_type_id, :image)
+      params.require(:coffee).permit(:name, :description, :price, :bean_id, :coffee_type_id, :image, :search, :id)
     end
 end
