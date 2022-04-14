@@ -1,9 +1,13 @@
 <div id="<%= dom_id coffee %>">
-  <p>
-    <strong><%= link_to coffee.name, coffee %></strong>
-  </p>
+  <% if @action == "show" %>
+    <h2><%= coffee.name %></h2>
+  <% else %>
+    <p>
+      <strong><%= link_to coffee.name, coffee %></strong>
+    </p>
+  <% end %>
 
-  <%# <%= image_tag coffee.image.to_s if coffee.image.present? %> %>
+  <%# <%= image_tag coffee.image.to_s if coffee.image.present? %>
   <%= image_tag coffee.image.thumb.to_s if coffee.image.present? %>
 
 

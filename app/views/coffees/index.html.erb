@@ -1,11 +1,15 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Coffees</h1>
-
+<h1>Beverages</h1>
+<%= form_tag coffees_path, :method => "get" do %>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag("Search", :name => nil)%>
+<% end %>
 <div id="coffees">
   <% @coffees.each do |coffee| %>
     <%= render coffee %>
   <% end %>
 </div>
+<%= paginate @coffees %>
 
 <%= link_to "New coffee", new_coffee_path %>
