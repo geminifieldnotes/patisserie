@@ -7,9 +7,11 @@
     </p>
   <% end %>
 
-  <%# <%= image_tag coffee.image.to_s if coffee.image.present? %>
-  <%= image_tag coffee.image.thumb.to_s if coffee.image.present? %>
-
+  <% if @action == "show" %>
+    <%= image_tag coffee.image.to_s if coffee.image.present? %>
+  <% else %>
+    <%= image_tag coffee.image.thumb.to_s if coffee.image.present? %>
+  <% end %>
 
   <p>
     <strong>Bean and Type:</strong>
