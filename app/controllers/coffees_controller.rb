@@ -1,5 +1,7 @@
 class CoffeesController < ApplicationController
   before_action :set_coffee, only: %i[ show edit update destroy ]
+  before_action :initialize_session
+  before_action :load_cart
 
   # GET /coffees or /coffees.json
   def index
@@ -17,6 +19,19 @@ class CoffeesController < ApplicationController
     @action = "show"
   end
 
+  def add_to_cart
+    id = params[:id].to_i
+    session[:cart] << id unless session[:cart].include?(id)
+    redirect_to coffees_path
+  end
+
+  def load_cart
+    @cart = Coffee.find(session[:cart])
+  end
+
+  def initialize_session
+    session[:cart] ||= []
+  end
   # GET /coffees/new
   def new
     @coffee = Coffee.new

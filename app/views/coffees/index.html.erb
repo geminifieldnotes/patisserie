@@ -1,5 +1,5 @@
 <p style="color: green"><%= notice %></p>
-
+<%= debug session[:cart]%>
 <h1 class="title is-4">Beverages Menu</h1>
 <%= form_tag coffees_path, :method => "get" do %>
     <%= text_field_tag :search, params[:search] %>

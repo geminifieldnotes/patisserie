@@ -52,8 +52,11 @@
         <%= coffee.price == coffee.price ? (number_to_currency coffee.price) : 'Not Applicable' %>
       </p>
 
-      <p><%= link_to 'Add to Cart', add_to_cart_path(coffee.id), method: :post, class: "button mt-4 is-small is-responsive is-warning is-active is-rounded" %></p>
-
+      <% if @cart.include?(coffee) %>
+        <p><%= button_to 'Added', '#', class: "button mt-4 is-small is-responsive is-success is-active is-rounded", disabled: true %></p>
+      <% else %>
+        <p><%= button_to 'Add to Cart', add_to_cart_path(coffee.id), method: :post, class: "button mt-4 is-small is-responsive is-warning is-rounded" %></p>
+      <% end %>
     </div>
   </div>
 </div>

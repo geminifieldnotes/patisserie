@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   resources :coffee_types
   resources :beans
 
-  post 'cart/add/:id', to: 'cart#add', as: 'add_to_cart'
-  delete 'cart/remove/:id', to:'cart#remove', as: 'delete_from_cart'
+  # post 'cart/add/:id', to: 'cart#add', as: 'add_to_cart'
+  # delete 'cart/remove/:id', to:'cart#remove', as: 'delete_from_cart'
+  post 'coffees/add_to_cart/:id', to: 'coffees#add_to_cart', as: 'add_to_cart'
+  delete 'coffees/remove_from_cart/:id', to:'coffeed#remove_from_cart', as: 'delete_from_cart'
 end
