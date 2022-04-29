@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_14_021603) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_14_192257) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -44,6 +44,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_14_021603) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "coffee_flavor_profiles", force: :cascade do |t|
+    t.integer "coffee_id", null: false
+    t.integer "flavor_profile_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["coffee_id"], name: "index_coffee_flavor_profiles_on_coffee_id"
+    t.index ["flavor_profile_id"], name: "index_coffee_flavor_profiles_on_flavor_profile_id"
+  end
+
   create_table "coffee_types", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -62,4 +71,29 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_14_021603) do
     t.string "image"
   end
 
+  create_table "flavor_profiles", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "pastries", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.decimal "price"
+    t.integer "pastry_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image"
+  end
+
+  create_table "pastry_types", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "coffee_flavor_profiles", "coffees"
+  add_foreign_key "coffee_flavor_profiles", "flavor_profiles"
 end

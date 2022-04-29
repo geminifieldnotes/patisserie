@@ -3,6 +3,9 @@ class Coffee < ApplicationRecord
 
   belongs_to :bean
   belongs_to :coffee_type
+  has_many :coffee_flavor_profiles
+  has_many :flavor_profiles, through: :coffee_flavor_profiles
+  accepts_nested_attributes_for :coffee_flavor_profiles, allow_destroy: true
 
   validates :name, :description, :price, presence: true
   validates :name, uniqueness: true
@@ -12,9 +15,9 @@ class Coffee < ApplicationRecord
   mount_uploader :image, ImageUploader
   serialize :image, JSON
 
-  def self.search(search)
-    if search
-      coffees = Coffee.where("name LIKE '%#{search}%'")
+  def self.search(term)
+    if term
+      coffees = Coffee.where("name LIKE '%#{term}%'")
         if coffees
           @coffees = coffees
         else

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :pastry_types
+  resources :pastries
   get 'menu/index'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
