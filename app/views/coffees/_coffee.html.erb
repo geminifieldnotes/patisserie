@@ -19,6 +19,16 @@
   </p>
 
   <p>
+    <strong>Flavor Profiles:</strong>
+    <% flavors = []
+       @coffee.flavor_profiles.each_with_index do |flavor, index|
+        flavors[index] = flavor.name
+       end
+    %>
+    <%= flavors.join(", ") %>
+  </p>
+
+  <p>
     <strong>Description:</strong>
     <%= coffee.description %>
   </p>
