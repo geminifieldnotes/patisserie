@@ -14,11 +14,14 @@
   <% end %>
 
   <p>
-    <%= pastry.pastry_type.name %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<%= "$#{pastry.price}" %>
+    <%= pastry.pastry_type.name %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<%= "#{number_to_currency pastry.price}" %>
   </p>
 
   <p>
     <strong>Description:</strong>
     <%= pastry.description %>
   </p>
+
+  <p><%= link_to 'Add to Cart', '#', class: "button mt-4 is-small is-responsive is-warning is-active is-rounded" %></p>
+
 </div>

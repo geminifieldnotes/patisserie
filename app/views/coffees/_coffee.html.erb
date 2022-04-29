@@ -49,8 +49,11 @@
 
       <p>
         <strong>Price:</strong>
-        <%= coffee.price == coffee.price ? coffee.price : 'Not Applicable' %>
+        <%= coffee.price == coffee.price ? (number_to_currency coffee.price) : 'Not Applicable' %>
       </p>
+
+      <p><%= link_to 'Add to Cart', add_to_cart_path(coffee.id), method: :post, class: "button mt-4 is-small is-responsive is-warning is-active is-rounded" %></p>
+
     </div>
   </div>
 </div>

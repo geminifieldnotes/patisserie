@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :pastry_types
   resources :pastries
+
   get 'menu/index'
+
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   root :to => 'store#index', :via => :get
@@ -13,8 +15,7 @@ Rails.application.routes.draw do
   get 'coffee_types/show'
   resources :coffee_types
   resources :beans
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  post 'cart/add/:id', to: 'cart#add', as: 'add_to_cart'
+  delete 'cart/remove/:id', to:'cart#remove', as: 'delete_from_cart'
 end
