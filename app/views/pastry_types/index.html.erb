@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Pastry types</h1>
+
+<div id="pastry_types">
+  <% @pastry_types.each do |pastry_type| %>
+    <%= render pastry_type %>
+    <p>
+      <%= link_to "Show this pastry type", pastry_type %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New pastry type", new_pastry_type_path %>
