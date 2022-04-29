@@ -3,8 +3,13 @@ class CoffeesController < ApplicationController
 
   # GET /coffees or /coffees.json
   def index
-    @coffees = Coffee.all
-    @coffees = Coffee.search(params[:search]).order(:id).page(params[:page])
+    if params['type'].blank? or params['type']['id'].blank?
+      @coffees = Coffee.all
+    elsif
+      coffee_type = CoffeeType.find(params['type']['id'])
+      @coffees = coffee_type.coffees
+    end
+    @coffees = @coffees.search(params[:search]).order(:id).page(params[:page])
   end
 
   # GET /coffees/1 or /coffees/1.json
