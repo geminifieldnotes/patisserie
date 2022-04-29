@@ -1,22 +1,24 @@
 <div id="<%= dom_id pastry %>">
+  <% if @action == "show" %>
+    <h2 class="title is-4"><%= pastry.name %></h2>
+  <% else %>
+    <p>
+      <strong><%= link_to pastry.name, pastry %></strong>
+    </p>
+  <% end %>
+
+  <% if @action == "show" %>
+    <%= image_tag pastry.image.to_s if pastry.image.present? %>
+  <% else %>
+    <%= image_tag pastry.image.thumb.to_s if pastry.image.present? %>
+  <% end %>
+
   <p>
-    <strong>Name:</strong>
-    <%= pastry.name %>
+    <%= pastry.pastry_type.name %>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<%= "$#{pastry.price}" %>
   </p>
 
   <p>
     <strong>Description:</strong>
     <%= pastry.description %>
   </p>
-
-  <p>
-    <strong>Price:</strong>
-    <%= pastry.price %>
-  </p>
-
-  <p>
-    <strong>Pastry type:</strong>
-    <%= pastry.pastry_type_id %>
-  </p>
-
 </div>
