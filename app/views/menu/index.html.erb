@@ -1,0 +1,61 @@
+<div id="explore-page">
+  <nav id="navbar">
+    <ul>
+      <li><a href="#black">Black Coffee</a></li>
+      <li><a href="#espresso">Espresso-based</a></li>
+      <li><a href="#milk">Milk-based</a></li>
+      <li><a href="#tea">Tea</a></li>
+    </ul>
+  </nav>
+  <h1>Le Jardin Menu</h1>
+  <%# <p>Explore the collection of creatures in the nest arsenal</p> %>
+
+  <div class="list">
+    <div id="beverages">
+      <h2>Beverage Collection</h2>
+      <h3 id="black">Black Coffees</h3>
+      <ul>
+        <% @black_coffees.each do |c| %>
+          <li>
+            <%= link_to c.name, coffee_path(c) %>
+          </li>
+        <% end %>
+      </ul>
+      <h3 id="espresso">Espresso-based Coffees</h3>
+      <ul>
+        <% @espresso_coffees.each do |c| %>
+          <li>
+            <%= link_to c.name, coffee_path(c) %>
+          </li>
+        <% end %>
+      </ul>
+      <h3 id="milk">Milk-based Beverages</h3>
+      <ul>
+        <% @milk_based_coffees.each do |c| %>
+          <li>
+            <%= link_to c.name, coffee_path(c) %>
+          </li>
+        <% end %>
+      </ul>
+      <h3 id="tea">Teas</h3>
+      <ul>
+        <% @teas.each do |c| %>
+          <li>
+            <%= link_to c.name, coffee_path(c) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <div id="Pastries">
+      <h2>Pastries Collection</h2>
+      <ul>
+        <%# <% @habitats.each do |habitat| %>
+          <%# <li>
+            <%= link_to habitat.name, habitat_path(habitat) %>
+          <%# </li> %>
+        <%#<% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
