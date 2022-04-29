@@ -52,11 +52,17 @@
         <%= coffee.price == coffee.price ? (number_to_currency coffee.price) : 'Not Applicable' %>
       </p>
 
-      <% if @cart.include?(coffee) %>
-        <p><%= button_to 'Remove', remove_from_cart_path(coffee), method: :delete, class: "button mt-4 is-small is-responsive is-dark is-rounded" %></p>
-      <% else %>
-        <p><%= button_to 'Add to Cart', add_to_cart_path(coffee.id, 1), method: :post, class: "button mt-4 is-small is-responsive is-warning is-rounded" %></p>
-      <% end %>
+      <% item = nil
+         @cart.each do |i|
+           id = i['id']
+           item = Coffee.find(id)
+         end
+         if item == coffee %>
+            <p><%= button_to 'Remove', remove_from_cart_path(coffee), method: :delete, class: "button mt-4 is-small is-responsive is-dark is-rounded" %></p>
+         <% else %>
+            <p><%= button_to 'Add to Cart', add_to_cart_path(coffee.id, 1), method: :post, class: "button mt-4 is-small is-responsive is-warning is-rounded" %></p>
+         <% end %>
+
     </div>
   </div>
 </div>

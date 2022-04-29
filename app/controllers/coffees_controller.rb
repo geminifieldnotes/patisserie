@@ -21,12 +21,19 @@ class CoffeesController < ApplicationController
 
   def add_to_cart
     id = params[:id].to_i
-    session[:cart] << id unless session[:cart].include?(id)
+    quantity = params[:quantity].to_i
+    session[:cart] << {id: id, quantity: quantity} unless session[:cart].include?(id)
+    redirect_to coffees_path
+  end
+
+  def remove_from_cart
+    id = params[:id].to_i
+    session[:cart].delete(id)
     redirect_to coffees_path
   end
 
   def load_cart
-    @cart = Coffee.find(session[:cart])
+    @cart = session[:cart]
   end
 
   def initialize_session

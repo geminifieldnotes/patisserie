@@ -1,5 +1,29 @@
 <p style="color: green"><%= notice %></p>
-<%= debug session[:cart]%>
+<details>
+  <summary>Shopping Cart</summary>
+  <% if @cart.empty? %>
+    <p class="ml-5">Your cart is empty</p>
+  <% else %>
+    <ul>
+      <% @cart.each do |i|
+          id = i['id']
+          quantity = i['quantity']
+          item = Coffee.find(id)
+        %>
+          <li class="ml-5 container">
+            <%= item.name %>
+            <%= number_to_currency item.price %>
+            <%= form_with(model: item) do |f| %>
+            <%= f.hidden_field :id, value: item.id%>
+            <%= f.number_field :quantity %>
+            <%= f.submit "Update" %>
+            <%= item.name %><%= button_to 'x', remove_from_cart_path(item.id), method: :delete, class: "ml-2 mt-1 is-small delete" %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</details>
 <h1 class="title is-4">Beverages Menu</h1>
 <%= form_tag coffees_path, :method => "get" do %>
     <%= text_field_tag :search, params[:search] %>
