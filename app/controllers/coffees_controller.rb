@@ -22,19 +22,32 @@ class CoffeesController < ApplicationController
   def add_to_cart
     id = params[:id].to_i
     quantity = params[:quantity].to_i
-    session[:cart] << {id: id, quantity: quantity} unless session[:cart].include?(id)
+    is_updated = false
+      @cart.each_with_index do |item, index|
+        if item['id'].to_i == id
+          session[:cart][index].update({id: id, quantity: quantity})
+          is_updated = true
+        end
+      end
+
+    if is_updated == false
+      session[:cart] << {id: id, quantity: quantity}
+      flash[:'notification is-success is-light'] = "Item added successfully"
+    end
     redirect_to coffees_path
   end
 
   def remove_from_cart
     id = params[:id].to_i
-    session[:cart].delete(id)
+    @cart.each_with_index do |item, index|
+      if item['id'] == id
+        @cart.delete(@cart[index])
+        flash[:'notification is-warning is-light'] = "Item is removed from cart"
+      end
+    end
     redirect_to coffees_path
   end
 
-  def update_cart
-
-  end
 
   def load_cart
     @cart = session[:cart]
@@ -114,6 +127,6 @@ class CoffeesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def coffee_params
-      params.require(:coffee).permit(:name, :description, :price, :bean_id, :coffee_type_id, :image, :search, :id)
+      params.require(:coffee).permit(:name, :description, :price, :bean_id, :coffee_type_id, :image, :search, :id, :quantity)
     end
 end

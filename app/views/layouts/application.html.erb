@@ -18,6 +18,9 @@
       <h1 class="title">Le Jardin Pâtisserie</h1>
       <h2 class="subtitle"> Artisinal coffee and pastry cafe &#8226; The Garden Patisserie &#8226; Creating handcrated delicacies since 1982</h2>
     </section>
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, class: name %>
+    <% end %>
     <section class="section">
       <%= yield %>
     </section>
