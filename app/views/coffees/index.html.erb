@@ -10,14 +10,14 @@
           quantity = i['quantity']
           item = Coffee.find(id)
         %>
-          <li class="ml-5 container">
+          <li class="ml-5 container is-flex is-flex-direction-row">
             <%= item.name %>
             <%= number_to_currency item.price %>
             <%= form_with(model: item) do |f| %>
             <%= f.hidden_field :id, value: item.id%>
-            <%= f.number_field :quantity %>
-            <%= f.submit "Update" %>
-            <%= item.name %><%= button_to 'x', remove_from_cart_path(item.id), method: :delete, class: "ml-2 mt-1 is-small delete" %>
+            <%= f.number_field :quantity, value: quantity %>
+            <%= button_to '✔', add_to_cart_path(:id, :quantity), method: :post, class: "is-small is-warning is-rounded" %>
+            <%= button_to 'x', remove_from_cart_path(item.id), method: :delete, class: "ml-2 mt-1 is-small delete" %>
           <% end %>
         </li>
       <% end %>

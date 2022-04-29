@@ -32,8 +32,17 @@ class CoffeesController < ApplicationController
     redirect_to coffees_path
   end
 
+  def update_cart
+
+  end
+
   def load_cart
     @cart = session[:cart]
+    @coffees_in_cart = []
+    @cart.each do |item|
+      @id =  item['id']
+      @coffees_in_cart << Coffee.find(@id)
+    end
   end
 
   def initialize_session
