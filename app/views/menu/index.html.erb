@@ -1,19 +1,9 @@
 <div id="explore-page">
-  <nav id="navbar">
-    <ul>
-      <li><a href="#black">Black Coffee</a></li>
-      <li><a href="#espresso">Espresso-based</a></li>
-      <li><a href="#milk">Milk-based</a></li>
-      <li><a href="#tea">Tea</a></li>
-    </ul>
-  </nav>
-  <h1>Le Jardin Menu</h1>
-  <%# <p>Explore the collection of creatures in the nest arsenal</p> %>
-
+  <h1>Le Jardin Pâtisserie Menu</h1>
   <div class="list">
     <div id="beverages">
-      <h2>Beverage Collection</h2>
-      <h3 id="black">Black Coffees</h3>
+      <h2 class="title is-3 is-spaced">Beverage Collection</h2>
+      <h3 class="subtitle is-5" id="brown">Black Coffees</h3>
       <ul>
         <% @black_coffees.each do |c| %>
           <li>
@@ -21,7 +11,7 @@
           </li>
         <% end %>
       </ul>
-      <h3 id="espresso">Espresso-based Coffees</h3>
+      <h3 class="subtitle is-5" id="espresso">Espresso-based Coffees</h3>
       <ul>
         <% @espresso_coffees.each do |c| %>
           <li>
@@ -29,7 +19,7 @@
           </li>
         <% end %>
       </ul>
-      <h3 id="milk">Milk-based Beverages</h3>
+      <h3 class="subtitle is-5" id="milk">Milk-based Beverages</h3>
       <ul>
         <% @milk_based_coffees.each do |c| %>
           <li>
@@ -37,7 +27,7 @@
           </li>
         <% end %>
       </ul>
-      <h3 id="tea">Teas</h3>
+      <h3 class="subtitle is-5" id="tea">Teas</h3>
       <ul>
         <% @teas.each do |c| %>
           <li>
@@ -47,7 +37,7 @@
       </ul>
     </div>
     <div id="Pastries">
-      <h2>Pastries Collection</h2>
+      <h2 class="title is-3">Pastries Collection</h2>
       <ul>
         <%# <% @habitats.each do |habitat| %>
           <%# <li>

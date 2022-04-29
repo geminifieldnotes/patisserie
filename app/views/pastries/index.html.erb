@@ -1,13 +1,10 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Pastries</h1>
+<h1 class="title is-4">Pastries Menu</h1>
 
 <div id="pastries">
   <% @pastries.each do |pastry| %>
     <%= render pastry %>
-    <p>
-      <%= link_to "Show this pastry", pastry %>
-    </p>
   <% end %>
 </div>
 

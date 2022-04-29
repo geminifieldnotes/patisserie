@@ -1,16 +1,16 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Beverages</h1>
+<h1 class="title is-4">Beverages Menu</h1>
 <%= form_tag coffees_path, :method => "get" do %>
     <%= text_field_tag :search, params[:search] %>
      <%= collection_select :type, :id, CoffeeType.all.order('name ASC'), :id, :name,{include_blank: 'Select Coffee Type'} %>
     <%= submit_tag("Search", :name => nil)%>
 <% end %>
 <div id="coffees">
-  <% @coffees.each do |coffee| %>
-    <%= render coffee %>
-  <% end %>
+  <div class="columns is-multiline is-variable is-1-mobile is-3-desktop is-6-widescreen">
+    <% @coffees.each do |coffee| %>
+      <%= render coffee %>
+    <% end %>
+  </div>
 </div>
 <%= paginate @coffees %>
-
-<%= link_to "New coffee", new_coffee_path %>
