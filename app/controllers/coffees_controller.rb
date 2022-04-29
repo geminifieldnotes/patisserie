@@ -38,9 +38,12 @@ class CoffeesController < ApplicationController
 
     respond_to do |format|
       if @coffee.save
-        format.html { redirect_to coffee_url(@coffee), notice: "Coffee was successfully created." }
+        # format.html { redirect_to coffee_url(@coffee), notice: "Coffee was successfully created." }
+        redirect_to coffee_url(@coffee)
+        flash[:info] = "Coffee was successfully created."
         format.json { render :show, status: :created, location: @coffee }
       else
+        flash[:notice] = "Coffee was not created."
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @coffee.errors, status: :unprocessable_entity }
       end

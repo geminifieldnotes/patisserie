@@ -1,7 +1,7 @@
 class StoreController < ApplicationController
   def index
     @coffees = Coffee.order(:name)
-    @coffee_types = CoffeeType.all
+    @pastries = Pastry.all
   end
 
   def show

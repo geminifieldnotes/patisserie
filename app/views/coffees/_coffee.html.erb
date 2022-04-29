@@ -1,41 +1,56 @@
-<div id="<%= dom_id coffee %>">
-  <% if @action == "show" %>
-    <h2><%= coffee.name %></h2>
-  <% else %>
-    <p>
-      <strong><%= link_to coffee.name, coffee %></strong>
-    </p>
-  <% end %>
+<% if @action == "show" %>
+  <div class="column is-three-fifths center">
+<% else %>
+  <div class="column is-one-third">
+<% end %>
+  <div class="card" id="<%= dom_id coffee %>">
+      <% if @action == "show" %>
+        <div class="card-image has-text-centered">
+          <%= image_tag coffee.image.to_s if coffee.image.present? %>
+        </div>
+      <% end %>
+    <div class="card-content">
+      <% if @action == "show" %>
+        <h2 class="title is-4"><%= coffee.name %></h2>
+      <% else %>
+        <p class="title is-5">
+          <strong><%= link_to coffee.name, coffee %></strong>
+        </p>
+      <% end %>
 
-  <% if @action == "show" %>
-    <%= image_tag coffee.image.to_s if coffee.image.present? %>
-  <% else %>
-    <%= image_tag coffee.image.thumb.to_s if coffee.image.present? %>
-  <% end %>
+      <% if @action != "show" %>
+        <div class="card-image has-text-centered">
+          <%= image_tag coffee.image.thumb.to_s if coffee.image.present? %>
+        </div>
+      <% end %>
 
-  <p>
-    <strong>Bean and Type:</strong>
-    <%= coffee.bean.name %> | <%= coffee.coffee_type.name %>
-  </p>
+      <p>
+        <strong>Bean and Type:</strong>
+        <%= coffee.bean.name %> | <%= coffee.coffee_type.name %>
+      </p>
 
-  <p>
-    <strong>Flavor Profiles:</strong>
-    <% flavors = []
-       @coffee.flavor_profiles.each_with_index do |flavor, index|
-        flavors[index] = flavor.name
-       end
-    %>
-    <%= flavors.join(", ") %>
-  </p>
+        <% if coffee.flavor_profiles.present? %>
+          <p>
+            <strong>Flavor Profiles:</strong>
+              <% flavors = []
+              coffee.flavor_profiles.each_with_index do |flavor, index|
+                flavors[index] = flavor.name
+              end %>
+            <%= flavors.join(", ") %>
+          </p>
+        <% end %>
 
-  <p>
-    <strong>Description:</strong>
-    <%= coffee.description %>
-  </p>
+      <% if @action == "show" %>
+        <p>
+          <strong>Description:</strong>
+          <%= coffee.description %>
+        </p>
+      <% end %>
 
-  <p>
-    <strong>Price:</strong>
-    <%= coffee.price == coffee.price ? coffee.price : 'Not Applicable' %>
-  </p>
-
+      <p>
+        <strong>Price:</strong>
+        <%= coffee.price == coffee.price ? coffee.price : 'Not Applicable' %>
+      </p>
+    </div>
+  </div>
 </div>
