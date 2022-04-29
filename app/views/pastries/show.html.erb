@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @pastry %>
+
+<div>
+  <%= link_to "Edit this pastry", edit_pastry_path(@pastry) %> |
+  <%= link_to "Back to pastries", pastries_path %>
+
+  <%= button_to "Destroy this pastry", @pastry, method: :delete %>
+</div>

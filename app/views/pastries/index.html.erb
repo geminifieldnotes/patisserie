@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Pastries</h1>
+
+<div id="pastries">
+  <% @pastries.each do |pastry| %>
+    <%= render pastry %>
+    <p>
+      <%= link_to "Show this pastry", pastry %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New pastry", new_pastry_path %>
